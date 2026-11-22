@@ -12,6 +12,6 @@ First release.
 - Members: Portal, subscribe form, members-only and paid posts, comments
   and search.
 - English, Dutch, French, German and Spanish. The four translations have
-  not yet been reviewed by a native speaker; if a label reads wrong, email
-  support@aftertype.studio.
+  not yet been reviewed by a native speaker; if a label reads wrong,
+  [open an issue](https://github.com/aftertype-studio/rhumb/issues).
 - No theme JavaScript, no font files, no build step.
