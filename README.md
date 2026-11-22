@@ -97,6 +97,11 @@ Rhumb relies on current CSS (`light-dark()`, `@property`, the `rlh` unit).
 It needs Chrome or Edge 123, Safari 17.5 or Firefox 128, or newer. Older
 browsers get readable black-on-white text without the layout refinements.
 
+## Support
+
+Rhumb is free and comes without guaranteed support. If something is broken
+or unclear, [open an issue](https://github.com/aftertype-studio/rhumb/issues).
+
 ## License
 
-MIT, see [LICENSE](LICENSE). Questions: support@aftertype.studio
+MIT, see [LICENSE](LICENSE).
