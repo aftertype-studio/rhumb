@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}" data-color-scheme="{{#match @custom.color_scheme "Dark"}}dark{{else match @custom.color_scheme "Light"}}light{{else}}auto{{/match}}">
+<head>
+    <meta charset="utf-8">
+    <title>{{meta_title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{#match @custom.color_scheme "Dark"}}
+    <meta name="color-scheme" content="dark">
+    {{else match @custom.color_scheme "Light"}}
+    <meta name="color-scheme" content="light">
+    {{else}}
+    <meta name="color-scheme" content="light dark">
+    {{/match}}
+    <link rel="stylesheet" href="{{asset "css/screen.css"}}">
+    {{#is "post, page"}}
+    <link rel="stylesheet" href="{{asset "css/content.css"}}">
+    {{/is}}
+    {{ghost_head}}
+    {{!-- Readable text on the accent colour (black or white), worked out by Ghost: no script needed. --}}
+    <style>:root { --accent-contrast: {{contrast_text_color @site.accent_color}}; }</style>
+</head>
+<body class="{{body_class}}">
+    <a class="skip-link" href="#main">{{t "Skip to content"}}</a>
+    {{> "header"}}
+    <main id="main">
+        {{{body}}}
+    </main>
+    {{> "footer"}}
+    {{ghost_foot}}
+</body>
+</html>

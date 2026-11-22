@@ -1,0 +1,65 @@
+{
+    "name": "rhumb",
+    "description": "A single-column, text-first Ghost theme for writers. Typography first, zero JavaScript, zero font files.",
+    "version": "1.0.0",
+    "engines": {
+        "ghost": ">=6.0.0"
+    },
+    "license": "MIT",
+    "scripts": {
+        "test": "gscan .",
+        "test:ci": "gscan --verbose .",
+        "zip": "sh scripts/zip.sh"
+    },
+    "author": {
+        "name": "Aftertype",
+        "email": "support@aftertype.studio",
+        "url": "https://aftertype.studio"
+    },
+    "gpm": {
+        "type": "theme",
+        "categories": [
+            "Blog",
+            "Writing"
+        ]
+    },
+    "keywords": [
+        "ghost",
+        "theme",
+        "ghost-theme",
+        "blog",
+        "writing",
+        "typography"
+    ],
+    "config": {
+        "posts_per_page": 20,
+        "image_sizes": {
+            "s": { "width": 300 },
+            "m": { "width": 600 },
+            "l": { "width": 1000 },
+            "xl": { "width": 2000 }
+        },
+        "card_assets": true,
+        "custom": {
+            "color_scheme": {
+                "type": "select",
+                "options": ["Auto", "Light", "Dark"],
+                "default": "Auto",
+                "description": "Follow the visitor's device, or force one scheme"
+            },
+            "show_excerpts": {
+                "type": "boolean",
+                "default": false,
+                "description": "Show an excerpt under each title in post lists"
+            },
+            "show_theme_credit": {
+                "type": "boolean",
+                "default": true,
+                "description": "Show 'Rhumb theme by Aftertype' in the footer"
+            }
+        }
+    },
+    "devDependencies": {
+        "gscan": "^6.7.0"
+    }
+}

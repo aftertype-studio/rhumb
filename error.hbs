@@ -1,0 +1,14 @@
+{{!< default}}
+<section class="error">
+    <h1>{{statusCode}}</h1>
+    <p>{{message}}</p>
+    <p><a href="{{@site.url}}">{{t "Go to the front page"}}</a></p>
+    {{#if errorDetails}}
+    <h2>{{t "Theme errors"}}</h2>
+    <ul>
+        {{#foreach errorDetails}}
+        <li>{{{rule}}}{{#foreach failures}}<br><code>{{ref}}</code>: {{message}}{{/foreach}}</li>
+        {{/foreach}}
+    </ul>
+    {{/if}}
+</section>

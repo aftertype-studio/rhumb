@@ -1,0 +1,14 @@
+{{!< default}}
+{{#tag}}
+<header class="page-header">
+    <h1>{{name}}</h1>
+    {{#if description}}<p>{{description}}</p>{{/if}}
+    <p>{{plural count.posts empty=(t "No posts") singular=(t "1 post") plural=(t "% posts")}}</p>
+</header>
+{{/tag}}
+<ol class="post-list">
+    {{#foreach posts}}
+    {{> "post-item"}}
+    {{/foreach}}
+</ol>
+{{pagination}}

@@ -1,0 +1,20 @@
+<header class="site-header">
+    {{!-- The site title is the page heading on the post index; everywhere else the page brings its own h1. --}}
+    {{#is "index"}}
+    <h1 class="site-title"><a href="{{@site.url}}">{{#if @site.logo}}<img src="{{@site.logo}}" alt="">{{/if}}{{@site.title}}</a></h1>
+    {{else}}
+    <p class="site-title"><a href="{{@site.url}}">{{#if @site.logo}}<img src="{{@site.logo}}" alt="">{{/if}}{{@site.title}}</a></p>
+    {{/is}}
+    {{navigation}}
+    <div class="site-actions">
+        {{search}}
+        {{#if @site.members_enabled}}
+            {{#if @member}}
+                <a href="#/portal/account" data-portal="account">{{t "Account"}}</a>
+            {{else}}
+                <a href="#/portal/signin" data-portal="signin">{{t "Sign in"}}</a>
+                <a href="#/portal/signup" data-portal="signup">{{t "Subscribe"}}</a>
+            {{/if}}
+        {{/if}}
+    </div>
+</header>

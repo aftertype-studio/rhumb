@@ -1,0 +1,9 @@
+{{#if navigation}}
+<nav aria-label="{{#if isSecondary}}{{t "Secondary"}}{{else}}{{t "Main"}}{{/if}}">
+    <ul>
+        {{#foreach navigation}}
+        <li><a href="{{url absolute="true"}}"{{#if current}} aria-current="page"{{/if}}>{{label}}</a></li>
+        {{/foreach}}
+    </ul>
+</nav>
+{{/if}}

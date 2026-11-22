@@ -1,0 +1,10 @@
+<footer class="site-footer">
+    {{navigation type="secondary"}}
+    <p>&copy; {{date format="YYYY"}} {{@site.title}}</p>
+    <p>
+        {{t "Published with"}} <a href="https://ghost.org">Ghost</a>
+        {{#if @custom.show_theme_credit}}
+        &middot; <a href="https://aftertype.studio/themes/rhumb">Rhumb</a> {{t "theme by"}} <a href="https://aftertype.studio">Aftertype</a>
+        {{/if}}
+    </p>
+</footer>

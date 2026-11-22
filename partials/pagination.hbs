@@ -1,0 +1,7 @@
+{{#match pages ">" 1}}
+<nav class="pagination" aria-label="{{t "Pagination"}}">
+    {{#if prev}}<a href="{{page_url prev}}" rel="prev">{{t "Newer posts"}}</a>{{/if}}
+    <span>{{t "Page {page} of {pages}" page=page pages=pages}}</span>
+    {{#if next}}<a href="{{page_url next}}" rel="next">{{t "Older posts"}}</a>{{/if}}
+</nav>
+{{/match}}

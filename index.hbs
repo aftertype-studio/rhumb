@@ -1,0 +1,13 @@
+{{!< default}}
+{{#is "home"}}{{#if @site.description}}<p class="site-description">{{@site.description}}</p>{{/if}}{{/is}}
+{{#if posts}}
+<ol class="post-list">
+    {{#foreach posts}}
+    {{> "post-item"}}
+    {{/foreach}}
+</ol>
+{{else}}
+<p>{{t "No posts yet."}}</p>
+{{/if}}
+{{pagination}}
+{{#if @site.members_enabled}}{{#unless @member}}{{> "subscribe"}}{{/unless}}{{/if}}

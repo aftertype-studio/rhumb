@@ -1,0 +1,10 @@
+<section class="subscribe" aria-labelledby="subscribe-title">
+    <h2 id="subscribe-title">{{t "Subscribe to {blogtitle}" blogtitle=@site.title}}</h2>
+    <form data-members-form="subscribe">
+        <label for="subscribe-email">{{t "Email address"}}</label>
+        <input id="subscribe-email" type="email" data-members-email required autocomplete="email" placeholder="{{t "you@example.com"}}">
+        <button type="submit">{{t "Subscribe"}}</button>
+        <p class="message-success" role="status">{{t "Check your inbox to confirm your subscription."}}</p>
+        <p class="message-error" role="alert" data-members-error></p>
+    </form>
+</section>

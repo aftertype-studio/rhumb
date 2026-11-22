@@ -1,0 +1,283 @@
+/* Rhumb - content.css. Posts and pages only: header, running text, cards.
+   Ghost ships its own card styles; section 6 fits them to Rhumb. */
+
+/* 1. Post header -------------------------------------------------------- */
+
+.post-header { margin-block-end: var(--s2); }
+
+.post-header h1 {
+    font-size: var(--step-4);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.post-excerpt {
+    margin-block-start: var(--s-1);
+    color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    text-wrap: pretty;
+}
+
+.post-meta { margin-block-start: var(--s0); }
+.post-header figure { margin-block-start: var(--s1); }
+.post-footer, main > article ~ * { margin-block-start: var(--s2); }
+
+/* 2. The column --------------------------------------------------------- */
+
+/* Three nested tracks: text (main), wide and full. Everything sits in the
+   text column unless the editor marked it wide or full. */
+.gh-content {
+    display: grid;
+    grid-template-columns:
+        [full-start] minmax(var(--gutter), 1fr)
+        [wide-start] minmax(0, 9rem)
+        [main-start] min(var(--measure), 100% - 2 * var(--gutter)) [main-end]
+        minmax(0, 9rem) [wide-end]
+        minmax(var(--gutter), 1fr) [full-end];
+}
+
+.gh-content > * {
+    grid-column: main;
+    min-inline-size: 0;
+}
+
+.gh-content > * + * { margin-block-start: var(--s0); }
+.gh-content > .kg-width-wide { grid-column: wide; }
+.gh-content > .kg-width-full { grid-column: full; }
+
+/* 3. Running text ------------------------------------------------------- */
+
+.gh-content > p, .gh-content li { text-wrap: pretty; }
+
+/* Hyphenate only where the line is short enough to need it. */
+@media (max-width: 40rem) {
+    .gh-content > p, .gh-content li {
+        hyphens: auto;
+        hyphenate-limit-chars: 7 3 3;
+    }
+}
+
+.gh-content > h2 { margin-block-start: var(--s2); font-size: var(--step-2); }
+.gh-content > h3 { margin-block-start: var(--s1); font-size: var(--step-1); }
+.gh-content > h4 { margin-block-start: var(--s1); font-size: var(--step-0); }
+.gh-content > :is(h2, h3, h4) + * { margin-block-start: var(--s-1); }
+
+.gh-content :is(ul, ol) { padding-inline-start: 1.25em; }
+.gh-content li + li, .gh-content li > :is(ul, ol) { margin-block-start: calc(var(--s-1) / 2); }
+
+.gh-content li::marker {
+    color: var(--muted);
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* With room to spare, bullets and numbers hang in the margin. */
+@media (min-width: 48rem) {
+    .gh-content > :is(ul, ol) { padding-inline-start: 0; }
+}
+
+.gh-content > blockquote {
+    padding-inline-start: var(--s0);
+    border-inline-start: 2px solid var(--link);
+    font-style: italic;
+}
+
+.gh-content > .kg-blockquote-alt {
+    padding: 0;
+    border: 0;
+    font-size: var(--step-1);
+    line-height: 1.4;
+    text-align: center;
+    text-wrap: balance;
+}
+
+.gh-content > hr {
+    border: 0;
+    color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1;
+    text-align: center;
+}
+
+.gh-content > hr::after {
+    content: "\00b7\2002\00b7\2002\00b7";
+}
+
+.gh-content :is(sup, sub) {
+    font-size: 0.7em;
+    font-variant-numeric: lining-nums;
+    line-height: 0;
+}
+
+/* 4. Code --------------------------------------------------------------- */
+
+.gh-content :is(code, kbd, pre) {
+    font-family: var(--font-mono);
+    font-variant-ligatures: none;
+    font-variant-numeric: normal;
+    hyphens: none;
+}
+
+.gh-content :not(pre) > code, .gh-content kbd {
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    background: var(--code-bg);
+    font-size: 0.85em;
+}
+
+.gh-content pre {
+    padding: var(--s-1) var(--s0);
+    overflow-x: auto;
+    border-radius: 3px;
+    background: var(--code-bg);
+    font-size: var(--step--1);
+    line-height: 1.5;
+    tab-size: 4;
+}
+
+/* 5. Tables and footnotes ----------------------------------------------- */
+
+.gh-content > table {
+    display: block;
+    inline-size: max-content;
+    max-inline-size: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+.gh-content :is(th, td) {
+    padding: 0.4em 1.5em 0.4em 0;
+    border-block-end: 1px solid var(--rule);
+    text-align: start;
+    vertical-align: baseline;
+}
+
+.gh-content :is(th, td):last-child { padding-inline-end: 0; }
+/* Right-aligned cells hold figures: scroll the table before breaking them. */
+.gh-content :is(th, td)[style*="right"] { white-space: nowrap; }
+.gh-content th { border-color: var(--ink); }
+
+.gh-content > .footnotes-sep {
+    inline-size: 6rem;
+    margin-block: var(--s1) 0;
+    border-block-start: 1px solid var(--rule);
+}
+
+.gh-content > .footnotes-sep::after { content: none; }
+
+.gh-content > .footnotes {
+    color: var(--muted);
+    font-size: var(--step--1);
+}
+
+.gh-content :is(.footnote-ref, .footnote-backref) > a,
+.gh-content a.footnote-backref { text-decoration-line: none; }
+
+/* 6. Figures and cards -------------------------------------------------- */
+
+.gh-content > :is(.kg-card, .kg-blockquote-alt, hr),
+.gh-content > :is(.kg-card, .kg-blockquote-alt, hr) + * { margin-block-start: var(--s1); }
+
+.gh-content > .kg-card + :is(h2, h3) { margin-block-start: var(--s2); }
+.gh-content > :is(h2, h3, h4) + .kg-card { margin-block-start: var(--s0); }
+
+figcaption {
+    margin-block-start: var(--s-1);
+    color: var(--muted);
+    font-size: var(--step--1);
+    line-height: 1.5;
+    text-align: center;
+    text-wrap: balance;
+}
+
+.kg-width-full > figcaption { padding-inline: var(--gutter); }
+
+.kg-image-card img {
+    display: block;
+    margin-inline: auto;
+}
+
+.kg-width-wide img, .kg-width-full img { inline-size: 100%; }
+
+.kg-embed-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Video embeds arrive with fixed pixel sizes; keep their shape, fill the column. */
+.kg-embed-card > iframe[width][height] {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+    border: 0;
+}
+
+/* Ghost's cards assume a white page, a sans-serif face and white text on
+   the accent colour. The .gh-content prefix outranks cards.min.css. */
+.gh-content .kg-audio-card,
+.gh-content .kg-product-card-container,
+.gh-content .kg-bookmark-card a.kg-bookmark-container,
+.gh-content .kg-file-card a.kg-file-card-container {
+    background: transparent;
+    color: inherit;
+}
+
+.gh-content .kg-card :is(.kg-audio-player-container, .kg-bookmark-content, .kg-btn, .kg-cta-sponsor-label, .kg-cta-button, .kg-file-card-container, .kg-header-card-button, .kg-product-card-container, .kg-signup-card-input, .kg-signup-card-button),
+.gh-content .kg-audio-card {
+    font-family: inherit;
+}
+
+/* Ghost's small grey labels are too faint to pass contrast. */
+.gh-content :is(.kg-audio-time, .kg-cta-sponsor-label span:not(a span)) { color: var(--muted); }
+
+.gh-content .kg-callout-card-accent,
+.gh-content .kg-callout-card-accent a,
+.gh-content .kg-button-card a.kg-btn-accent,
+.gh-content .kg-product-card a.kg-product-card-btn-accent {
+    color: var(--accent-contrast, #fff);
+}
+
+/* 7. Members ------------------------------------------------------------ */
+
+/* The gate Ghost puts on members-only posts. It ships white-on-accent with
+   inline colours, hence the two !important overrides. */
+.gh-content .gh-post-upgrade-cta,
+.gh-content .gh-post-upgrade-cta-content {
+    display: block;
+    color: inherit;
+    font: inherit;
+}
+
+.gh-content .gh-post-upgrade-cta-content {
+    padding: var(--s1) 0;
+    border-block: 1px solid var(--rule);
+    border-radius: 0;
+    background: none !important;
+}
+
+.gh-content .gh-post-upgrade-cta h2 {
+    color: inherit;
+    font-size: var(--step-1);
+}
+
+.gh-content .gh-post-upgrade-cta p { margin-block-start: var(--s-1); }
+.gh-content .gh-post-upgrade-cta small { font-size: var(--step--1); }
+
+.gh-content .gh-post-upgrade-cta a {
+    color: inherit;
+    font-weight: inherit;
+}
+
+.gh-content .gh-post-upgrade-cta a.gh-btn {
+    display: inline-block;
+    margin-block-start: var(--s0);
+    padding: 0.4em 0.8em;
+    border-radius: 3px;
+    background: var(--accent);
+    color: var(--accent-contrast, #fff) !important;
+    font-size: inherit;
+    font-weight: inherit;
+}

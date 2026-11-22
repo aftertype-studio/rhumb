@@ -1,0 +1,314 @@
+/* Rhumb - screen.css. Loaded on every page; post content is in content.css.
+   No build step: edit and reload. */
+
+/* 1. Tokens ------------------------------------------------------------- */
+
+/* Registered as a length, so 65ch is measured once in the body font and
+   every element inherits the same column width, whatever its own size. */
+@property --measure {
+    syntax: "<length>";
+    inherits: true;
+    initial-value: 576px;
+}
+
+:root {
+    /* Colour roles. light-dark() follows color-scheme, set just below. */
+    color-scheme: light dark;
+    --bg: light-dark(#fdfdfb, #151514);
+    --ink: light-dark(#1b1a18, #e9e7e2);
+    --muted: light-dark(#5e5b55, #a5a29b);
+    --rule: light-dark(#d8d4cb, #36342f);
+    --border: light-dark(#8a867d, #7d7a74);
+    --code-bg: light-dark(#f3f2ee, #201f1d);
+    /* The accent only tints underlines and fills buttons, never text. */
+    --accent: var(--ghost-accent-color, currentColor);
+    --link: color-mix(in oklab, var(--accent) 60%, var(--ink));
+
+    /* Fonts: Ghost's own font settings first, then a system stack. */
+    --font-body: var(--gh-font-body, Charter, "Bitstream Charter", "Iowan Old Style", "Sitka Text", Cambria, Georgia, serif);
+    --font-heading: var(--gh-font-heading, var(--font-body));
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+    /* Type scale: 18px/1.2 at 375px to 21px/1.25 at 1440px. */
+    --step--1: clamp(0.938rem, 0.898rem + 0.169vw, 1.05rem);
+    --step-0: clamp(1.125rem, 1.059rem + 0.282vw, 1.312rem);
+    --step-1: clamp(1.35rem, 1.248rem + 0.437vw, 1.641rem);
+    --step-2: clamp(1.62rem, 1.468rem + 0.647vw, 2.051rem);
+    --step-3: clamp(1.944rem, 1.726rem + 0.931vw, 2.563rem);
+    --step-4: clamp(2.333rem, 2.026rem + 1.309vw, 3.204rem);
+
+    /* Space: multiples of one line of body text. */
+    --s-1: 0.5rlh;
+    --s0: 1rlh;
+    --s1: 1.5rlh;
+    --s2: 2rlh;
+    --s3: 3rlh;
+    --s4: 4rlh;
+
+    --gutter: clamp(1rem, 4vw, 2rem);
+}
+
+[data-color-scheme="light"] { color-scheme: light; }
+[data-color-scheme="dark"] { color-scheme: dark; }
+
+/* 2. Base --------------------------------------------------------------- */
+
+*, ::before, ::after { box-sizing: border-box; }
+
+html {
+    /* Fixes the rlh unit to one line of body text; rem stays 16px. */
+    line-height: calc(var(--step-0) * 1.6);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: var(--step-0)/1.6 var(--font-body);
+    --measure: 65ch;
+    font-kerning: normal;
+    font-variant-numeric: oldstyle-nums;
+    hanging-punctuation: first;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, figure, blockquote, pre { margin: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-variant-numeric: lining-nums;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+}
+
+a {
+    color: inherit;
+    text-decoration-color: var(--link);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
+}
+
+a:hover { text-decoration-color: currentColor; }
+
+:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+
+img, video, iframe { max-inline-size: 100%; }
+img, video { block-size: auto; }
+
+.skip-link {
+    position: absolute;
+    inset-block-start: -10rem;
+    inset-inline-start: var(--gutter);
+    z-index: 10;
+    padding: 0.5em 1em;
+    background: var(--ink);
+    color: var(--bg);
+}
+
+.skip-link:focus { inset-block-start: 0.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* 3. Layout: one column, one measure ------------------------------------ */
+
+.site-header, .site-footer, main > *, .post-header, .post-footer {
+    box-sizing: content-box;
+    max-inline-size: var(--measure);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+/* A post manages its own width so wide and full cards can break out. */
+main > article {
+    max-inline-size: none;
+    padding-inline: 0;
+}
+
+main { padding-block: var(--s2) var(--s3); }
+
+/* 4. Header ------------------------------------------------------------- */
+
+.site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-1) var(--s0);
+    padding-block: var(--s0);
+    font-size: var(--step--1);
+}
+
+.site-title {
+    margin-inline-end: auto;
+    font: 700 var(--step-0)/1.6 var(--font-heading);
+    letter-spacing: 0;
+}
+
+/* The logo is a small mark beside the name, not a replacement for it. */
+.site-title a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.site-title img {
+    block-size: 1.25em;
+    inline-size: auto;
+}
+
+.site-header ul, .site-footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--s0);
+    padding: 0;
+    list-style: none;
+}
+
+.site-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--s0);
+}
+
+.site-header a, .site-footer a, .pagination a, .post-item a { text-decoration-line: none; }
+
+.site-header a:hover, .site-footer a:hover, .pagination a:hover, .post-item a:hover,
+.site-header [aria-current] { text-decoration-line: underline; }
+
+/* Ghost's search button ships with an inline outline: none. */
+.gh-search-icon:focus-visible { outline: 2px solid var(--ink) !important; }
+
+/* 5. Post list ---------------------------------------------------------- */
+
+.site-description, .page-header { margin-block-end: var(--s2); }
+
+.site-description {
+    color: var(--muted);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    text-wrap: balance;
+}
+
+.page-header h1 { font-size: var(--step-3); }
+.page-header > * + * { margin-block-start: var(--s-1); }
+.page-header img { border-radius: 50%; }
+
+.page-header p:last-child, .post-date, .post-meta, .post-footer, .pagination, .site-footer {
+    color: var(--muted);
+    font-size: var(--step--1);
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+.post-list {
+    padding-block: 0;
+    list-style: none;
+}
+
+.post-list li + li { margin-block-start: var(--s0); }
+
+.post-item h2 {
+    font-size: var(--step-1);
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.post-item-excerpt {
+    color: var(--muted);
+    font-size: var(--step--1);
+}
+
+@media (min-width: 40rem) {
+    .post-item {
+        display: grid;
+        grid-template-columns: 7.5em 1fr;
+        column-gap: var(--s0);
+        align-items: baseline;
+    }
+
+    .post-item > * { grid-column: 2; }
+
+    .post-item .post-date {
+        grid-area: 1 / 1;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s0);
+    margin-block-start: var(--s2);
+}
+
+/* 6. Subscribe form ----------------------------------------------------- */
+
+.subscribe {
+    margin-block-start: var(--s3);
+}
+
+.subscribe::before, .site-footer::before {
+    content: "";
+    display: block;
+    margin-block-end: var(--s0);
+    border-block-start: 1px solid var(--rule);
+}
+
+.subscribe h2 { font-size: var(--step-1); }
+
+.subscribe form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-1);
+    margin-block-start: var(--s-1);
+}
+
+.subscribe label, .subscribe p {
+    flex-basis: 100%;
+    font-size: var(--step--1);
+}
+
+.subscribe input, .subscribe button {
+    padding: 0.4em 0.8em;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font: inherit;
+}
+
+.subscribe input {
+    flex: 1 1 12em;
+    min-inline-size: 0;
+    background: transparent;
+    color: inherit;
+}
+
+.subscribe button {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-contrast, #fff);
+    cursor: pointer;
+}
+
+/* Ghost toggles .loading, .success and .error on the form. */
+.loading button { opacity: 0.6; }
+.message-success, .message-error:empty { display: none; }
+.success .message-success { display: block; }
+
+/* 7. Footer and error --------------------------------------------------- */
+
+.site-footer { padding-block-end: var(--s1); }
+.site-footer > * + * { margin-block-start: var(--s-1); }
+
+.error h1 { font-size: var(--step-4); }
+.error > * + * { margin-block-start: var(--s0); }
